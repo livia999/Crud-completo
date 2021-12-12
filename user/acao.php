@@ -63,7 +63,7 @@
         while ($linha = $consulta->fetch(PDO::FETCH_ASSOC)) {
             $dados['id'] = $linha['id'];
             $dados['user'] = $linha['user'];
-            $dados['senha'] = $linha['pass'];
+            $dados['pass'] = $linha['pass'];
         }
         return $dados;
     }

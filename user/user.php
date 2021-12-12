@@ -1,7 +1,19 @@
 <!DOCTYPE html>
+
+<style> 
+
+fieldset{
+    background-color: white;
+    width: 200px;
+  height: 250px;
+}
+
+</style>
+
 <?php 
 include_once "../conf/default.inc.php";
 require_once "../conf/Conexao.php";
+
 $title = "Lista de usuários ";
 $consulta = isset($_POST['consulta']) ? $_POST['consulta'] : "";
 $tipo = isset($_POST["tipo"]) ? $_POST["tipo"] : 1;
@@ -14,16 +26,17 @@ $tipo = isset($_POST["tipo"]) ? $_POST["tipo"] : 1;
     <link rel="stylesheet" href="css/estilo.css">
     <script>
         function excluirRegistro(url) {
-            if (confirm("Confirmar Exclusão?"))
+            if (confirm("Você quer excluir?"))
                 location.href = url; 
         }
     </script>
 </head>
-<body>
+<body bgcolor="#C1BDDA">
     <?php include '../menu.php'; ?>
     <br>
     <a href="cad.php"><button>Novo</button></a>
     <br><br>
+    <fieldset>
     <form method="post">
     <input type="text" name="consulta" id="consulta" value="<?php echo $consulta; ?>">
     <input type="submit" value="Pesquisar">
@@ -46,18 +59,22 @@ $tipo = isset($_POST["tipo"]) ? $_POST["tipo"] : 1;
         <th>Alterar</th>
         <th>Excluir</th>
     </tr>
+        
+    </fieldset>
     <?php 
     $pdo = Conexao::getInstance();
     if ($tipo == 1 ) 
 
     $consulta = $pdo->query("SELECT * FROM user 
                              WHERE user 
-                             LIKE '$consulta%'");
+                             LIKE '$consulta%'
+                             ORDER BY user");
 
     else
     $consulta = $pdo->query("SELECT * FROM user
                             WHERE pass
-                            LIKE '$consulta%'");
+                            LIKE '$consulta%'
+                            ORDER BY pass");
 
     while ($linha = $consulta->fetch(PDO::FETCH_ASSOC)) {   
         ?>
